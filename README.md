@@ -1,6 +1,11 @@
 # RPC-OnlineTest
 Distributed system version of an online test using Remote Procedure Call (RPC) in Python.
 
+
+## Preparation
+1.Install required library
+2.Make sure you have the right format of csv
+
 ## Functionality
 
 Admin :
