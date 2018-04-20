@@ -7,7 +7,7 @@ PORT_UP = 8001
 DB_SERVER = 'localhost'
 DB_USER = 'root'
 DB_PASS = ''
-DB_NAME = 'sister'
+DB_NAME = 'testdb'
 server = SimpleXMLRPCServer((IP, PORT), allow_none=True)
 print("Listening on port", PORT)
 db = pymysql.connect(DB_SERVER, DB_USER, DB_PASS, DB_NAME)
