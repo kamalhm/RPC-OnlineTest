@@ -96,6 +96,7 @@ while True:
                         print("waktu habis")
                         time.sleep(3)
                         break                    
+
                     print(soal[i][1])
                     print("a. ",soal[i][3])
                     print("b. ",soal[i][4])
@@ -108,10 +109,12 @@ while True:
                         else :
                             print("jawaban tidak benar")
                     soal[i][7] = jaw
+
                 nilai = 0
                 for i in soal :
                     if (i[2] == i[7]):
                         nilai += 5
+
                 print("Nilai KAMYU adalah : ",nilai)
                 server.upload_nilai(nilai,usr_user)
                 print("Nilai KAMYU sudah diupload")

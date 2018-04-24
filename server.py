@@ -93,6 +93,13 @@ def lihat_jawaban(peserta):
     jawaban = cursor.fetchall()
     return jawaban
 
+
+def lihat_nilai(id):
+    query = "select * from peserta where id_peserta= %s"%id
+    cursor.execute(query)
+    nilai = cursor.fetchone()
+    return nilai
+
 def upload_soal_peserta(soal,id_peserta):
     for i in range(len(soal)):
         query = f"insert into soal_peserta values ('{soal[i][0]}_{id_peserta}','{soal[i][7]}','{id_peserta}','{soal[i][0]}')"
@@ -110,6 +117,7 @@ server.register_function(waktu_selesai, 'waktu_selesai')
 server.register_function(waktu_mulai, 'waktu_mulai')
 server.register_function(upload_nilai, 'upload_nilai')
 server.register_function(lihat_jawaban, 'lihat_jawaban')
+server.register_function(lihat_nilai, 'lihat_nilai')
 server.register_function(upload_soal_peserta, 'upload_soal_peserta')
 
 server.serve_forever()
