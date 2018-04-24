@@ -71,8 +71,6 @@ def get_soal():
     soal_peserta = []
     for i in range(0,20):
         soal_peserta.append(soal[random.randint(0,99)])
-        soal_peserta[i][7].append("-")
-    #print('soal peserta0',soal_peserta[0][0])    
     return soal_peserta
   
 def waktu_selesai():
@@ -82,7 +80,8 @@ def waktu_mulai():
     return time.time()
   
 def upload_nilai(nilai,id_peserta):
-    query = f"update peserta set 'nilai'={nilai} where 'id_peserta'='{id_peserta}'"
+    #query = f"update peserta set 'nilai'={nilai} where peserta.id_peserta='{id_peserta}'"
+    print(query)
     cursor.execute(query)
     db.commit()
     

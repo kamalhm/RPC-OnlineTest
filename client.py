@@ -85,32 +85,32 @@ while True:
                 soal = []
                 print("mulai kuis")
                 print("selesaikan dalam 10 menit")
-                # time.sleep(1)
+                #time.sleep(1)
                 soal = server.get_soal()
-                print(soal)
+                #print(soal)
                 waktu_mulai = server.waktu_mulai()
                 waktu_selesai = server.waktu_selesai()
-                
-                for i in range(0,20) :
+                jawab = []
+                for i in soal :
                     if (time.time() > waktu_selesai):
                         print("waktu habis")
                         time.sleep(3)
                         break                    
-                    print(soal[i][1])
-                    print("a. ",soal[i][3])
-                    print("b. ",soal[i][4])
-                    print("c. ",soal[i][5])
-                    print("d. ",soal[i][6])
+                    print(i[1])
+                    print("a. ",i[3])
+                    print("b. ",i[4])
+                    print("c. ",i[5])
+                    print("d. ",i[6])
                     while True:
                         jaw = input("masukkan jawaban(a/b/c/d) : ")
                         if (jaw == 'a') or (jaw == 'b') or (jaw == 'c') or (jaw == 'd'):
                             break
                         else :
                             print("jawaban tidak benar")
-                    soal[i][7] = jaw
+                    jawab.append(jaw)
                 nilai = 0
-                for i in soal :
-                    if (i[2] == i[7]):
+                for i in range(len(soal)) :
+                    if (soal[i][2] == jawab[i]):
                         nilai += 5
                 print("Nilai KAMYU adalah : ",nilai)
                 server.upload_nilai(nilai,usr_user)
