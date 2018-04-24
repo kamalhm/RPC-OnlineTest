@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 24, 2018 at 01:59 PM
+-- Generation Time: Apr 24, 2018 at 02:44 PM
 -- Server version: 10.1.31-MariaDB
 -- PHP Version: 7.2.3
 
@@ -214,6 +214,13 @@ CREATE TABLE `soal_peserta` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
+-- Dumping data for table `soal_peserta`
+--
+
+INSERT INTO `soal_peserta` (`id_soalpeserta`, `kunci_jawaban_peserta`, `id_peserta`, `id_soal`) VALUES
+('1', '1', '1', '1');
+
+--
 -- Indexes for dumped tables
 --
 
@@ -248,8 +255,8 @@ ALTER TABLE `soal_materi`
 --
 ALTER TABLE `soal_peserta`
   ADD PRIMARY KEY (`id_soalpeserta`),
-  ADD UNIQUE KEY `soal_peserta_fk1` (`id_peserta`),
-  ADD UNIQUE KEY `id_soal` (`id_soal`);
+  ADD KEY `soal_peserta_fk1` (`id_peserta`) USING BTREE,
+  ADD KEY `id_soal` (`id_soal`) USING BTREE;
 
 --
 -- Constraints for dumped tables
