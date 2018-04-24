@@ -49,7 +49,7 @@ while True:
         while True:
             os.system('cls')
             if valid_admin==False:
-                adm_user = input('Username :')
+                adm_user = input('Username :aa')
                 adm_pass = input('Password :')
                 valid_admin = server.login_admin(adm_user, adm_pass)
             if valid_admin:
