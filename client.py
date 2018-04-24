@@ -82,41 +82,48 @@ while True:
             menu_user()
             pilihan = input("Masukkan pilihan : ")
             if pilihan == "1":
+                soal = []
                 print("mulai kuis")
                 print("selesaikan dalam 10 menit")
-                time.sleep(3)
+                # time.sleep(1)
                 soal = server.get_soal()
+                print(soal)
                 waktu_mulai = server.waktu_mulai()
                 waktu_selesai = server.waktu_selesai()
-                for i in soal :
+                
+                for i in range(0,20) :
                     if (time.time() > waktu_selesai):
                         print("waktu habis")
                         time.sleep(3)
                         break                    
-                    print(i[1])
-                    print("a. ",i[3])
-                    print("b. ",i[4])
-                    print("c. ",i[5])
-                    print("d. ",i[6])
+
+                    print(soal[i][1])
+                    print("a. ",soal[i][3])
+                    print("b. ",soal[i][4])
+                    print("c. ",soal[i][5])
+                    print("d. ",soal[i][6])
                     while True:
                         jaw = input("masukkan jawaban(a/b/c/d) : ")
-                        if (jaw == 'a') or (jaw == 'b') or (jam == 'c') or (jaw == 'd'):
+                        if (jaw == 'a') or (jaw == 'b') or (jaw == 'c') or (jaw == 'd'):
                             break
                         else :
                             print("jawaban tidak benar")
-                    i[7] = jaw
+                    soal[i][7] = jaw
+
                 nilai = 0
                 for i in soal :
                     if (i[2] == i[7]):
                         nilai += 5
 
+                print("Nilai KAMYU adalah : ",nilai)
+                server.upload_nilai(nilai,usr_user)
+                print("Nilai KAMYU sudah diupload")
+                server.upload_soal_peserta(soal,usr_user)
+                print("bukan")
+
+
             elif pilihan == "2":
                 print("lihat nilai")
-                nilai = server.lihat_nilai(usr_user)
-                print("nilai anda adalah : ", nilai[2])
-                time.sleep(5)
-
-
             elif pilihan == "3":
 
                 break

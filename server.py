@@ -67,10 +67,12 @@ def get_soal():
     query = "select * from soal_materi"
     cursor.execute(query)
     soal = cursor.fetchall()
+    print('soal',soal)
     soal_peserta = []
     for i in range(0,20):
         soal_peserta.append(soal[random.randint(0,99)])
-        soal_peserta[i].append("-")
+        soal_peserta[i][7].append("-")
+    #print('soal peserta0',soal_peserta[0][0])    
     return soal_peserta
   
 def waktu_selesai():
@@ -98,6 +100,13 @@ def lihat_nilai(id):
     nilai = cursor.fetchone()
     return nilai
 
+def upload_soal_peserta(soal,id_peserta):
+    for i in range(len(soal)):
+        query = f"insert into soal_peserta values ('{soal[i][0]}_{id_peserta}','{soal[i][7]}','{id_peserta}','{soal[i][0]}')"
+        cursor.execute(query)
+        db.commit()
+
+
 server.register_function(login_admin, 'login_admin')
 server.register_function(login_user, 'login_user')
 server.register_function(upload_soal, 'upload_soal')
@@ -109,5 +118,6 @@ server.register_function(waktu_mulai, 'waktu_mulai')
 server.register_function(upload_nilai, 'upload_nilai')
 server.register_function(lihat_jawaban, 'lihat_jawaban')
 server.register_function(lihat_nilai, 'lihat_nilai')
+server.register_function(upload_soal_peserta, 'upload_soal_peserta')
 
 server.serve_forever()
