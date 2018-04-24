@@ -10,11 +10,10 @@ server = xmlrpc.client.ServerProxy(
 )
 
 
-
 def menu_awal():
     os.system('cls')
     print("SELAMAT DATANG DI \nKUIS ONLINE BAHASA INGGRIS")
-    print("---MENU---")
+    print("MENU")
     print("1. Login Admin")
     print("2. Login User")
     print("3. Exit")
@@ -22,107 +21,102 @@ def menu_awal():
 
 def menu_admin():
     os.system('cls')
-    print('---Menu Admin---')
     print('1. Upload Soal')
     print('2. Lihat Soal')
     print('3. Delete Soal')
-    print('4. Nanti aja ah, mau logout dulu')
+    print('4. Nanti aja ah')
 
 
 def menu_user():
     os.system('cls')
-    print('---Menu User---')
     print('1. Mulai Kuis')
     print('2. Lihat Nilai')
     print('3. Lihat Jawaban')
 
 
-
-
 while True:
-    valid_admin = False
-    valid_user = False
-    os.system('cls')
     menu_awal()
     pilihan = eval(input('Masukan pilihan :'))
     if pilihan == 1:
-        while True:
-            os.system('cls')
-            if valid_admin==False:
-                adm_user = input('Username :aa')
-                adm_pass = input('Password :')
-                valid_admin = server.login_admin(adm_user, adm_pass)
-            if valid_admin:
-                print('Logged-in Sebagai : Admin')
-                time.sleep(0.5)
+        os.system('cls')
+        adm_user = input('Username :')
+        adm_pass = getpass.getpass('Password :')
+        valid_admin = server.login_admin(adm_user, adm_pass)
+        if valid_admin:
+            print('Berhasil login sebagai admin')
+            time.sleep(0.5)
+            menu_admin()
+            pilihan = eval(input('Masukkan pilihan :'))
+            if pilihan == 1:
+                nama_file = input('Masukkan nama file (format .csv)')
+                print('uploading...')
+                lines = [line.rstrip('\n') for line in open(nama_file)]
+                for i in range(len(lines)):
+                    server.upload_soal(lines[i])
                 menu_admin()
-                pilihan = eval(input('Masukan pilihan :'))
-                if pilihan == 1:
-                    nama_file = input('Masukan nama file (format .csv)')
-                    print('uploading...')
-                    lines = [line.rstrip('\n') for line in open(nama_file)]
-                    for i in range(len(lines)):
-                        server.upload_soal(lines[i])
-                    menu_admin()
-                    pilihan = eval(input('Masukan pilihan :'))
-                elif pilihan == 2:
-                    soal = server.lihat_soal()
-                    for i in range(len(soal)):
-                        print(soal[i], '\n')
-                    print('Setelah Soal, ada apa ya')
-                    time.sleep(0.5)
-                    # time.sleep(2)
-                elif pilihan == 3:
-                    server.delete_soal()
-                    print("Soal Deleted")
-                    time.sleep(0.5)
+                pilihan = eval(input('Masukkan pilihan :'))
+            elif pilihan == 2:
+                soal = server.lihat_soal()
+                for i in range(len(soal)):
+                    print(soal[i], '\n')
+                print('setelah soal')
+                time.sleep(5)
+            elif pilihan == 3:
+                server.delete_soal()
 
-                elif pilihan == 4:
-                    valid_admin==False
-                    print("Log Out Successful")
-                    time.sleep(0.5)
-                    break
-            else:
-                os.system('cls')
-                print('Salah password/username')
-                time.sleep(0.5)
-                os.system('cls')
-                break
-    elif pilihan == 2:
-        while True:
+        else:
+            print('Salah password/username')
+            time.sleep(0.5)
             os.system('cls')
-            if valid_user==False:
-                usr_user = input('Username :')
-                usr_pass = input('Password :')
-                valid_user = server.login_user(usr_user, usr_pass)
-            if valid_user:
-                print('Logged-in sebagai : User')
-                time.sleep(0.5)
-                os.system('cls')
-                menu_user()
-                if pilihan == 1:
-                    print("under construction")
-                    menu_user()
-                    pilihan = eval(input('Masukan pilihan :'))
-                elif pilihan == 2:
-                    print("under construction")
-                    menu_user()
-                    pilihan = eval(input('Masukan pilihan :'))
-                elif pilihan == 3:
-                    print("under construction")
-                    menu_user()
-                    pilihan = eval(input('Masukan pilihan :'))
-                elif pilihan == 4:
-                    valid_user == False
-                    print("Log Out Successful")
-                    time.sleep(0.5)
-                    break
-            else:
-                print('Salah password/username')
-                time.sleep(0.5)
-                os.system('cls')
+    if pilihan == 2:
+        os.system('cls')
+        usr_user = input('Username :')
+        usr_pass = getpass.getpass('Password :')
+        valid_user = server.login_user(usr_user, usr_pass)
+        if valid_user:
+            print('Berhasil login sebagai user')
+            time.sleep(0.5)
+            os.system('cls')
+            menu_user()
+            pilihan = input("Masukkan pilihan : ")
+            if pilihan == "1":
+                print("mulai kuis")
+                print("selesaikan dalam 10 menit")
+                time.sleep(3)
+                soal = server.get_soal()
+                waktu_mulai = server.waktu_mulai()
+                waktu_selesai = server.waktu_selesai()
+                for i in soal :
+                    if (time.time() > waktu_selesai):
+                        print("waktu habis")
+                        time.sleep(3)
+                        break                    
+                    print(i[1])
+                    print("a. ",i[3])
+                    print("b. ",i[4])
+                    print("c. ",i[5])
+                    print("d. ",i[6])
+                    while True:
+                        jaw = input("masukkan jawaban(a/b/c/d) : ")
+                        if (jaw == 'a') or (jaw == 'b') or (jam == 'c') or (jaw == 'd'):
+                            break
+                        else :
+                            print("jawaban tidak benar")
+                    i[7] = jaw
+                nilai = 0
+                for i in soal :
+                    if (i[2] == i[7]):
+                        nilai += 5
+                
+
+
+            elif pilihan == "2":
+                print("lihat nilai")
+            elif pilihan == "3":
                 break
-    elif pilihan==3:
-        print("Thank you")
-        time.sleep(0.5)
-        break
+
+
+        else:
+            print('Salah password/username')
+            time.sleep(0.5)
+            os.system('cls')
