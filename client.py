@@ -49,7 +49,7 @@ while True:
         while True:
             os.system('cls')
             if valid_admin==False:
-                adm_user = input('Username :aa')
+                adm_user = input('Username :')
                 adm_pass = input('Password :')
                 valid_admin = server.login_admin(adm_user, adm_pass)
             if valid_admin:
@@ -59,7 +59,7 @@ while True:
                 pilihan = eval(input('Masukan pilihan :'))
                 if pilihan == 1:
                     nama_file = input('Masukan nama file (format .csv)')
-                    print('uploading...')
+                    print('Uploading...')
                     lines = [line.rstrip('\n') for line in open(nama_file)]
                     for i in range(len(lines)):
                         server.upload_soal(lines[i])
@@ -109,7 +109,12 @@ while True:
                     menu_user()
                     pilihan = eval(input('Masukan pilihan :'))
                 elif pilihan == 3:
-                    print("under construction")
+                    print("Masuk")
+                    jawaban = server.lihat_jawaban(usr_user)
+                    for i in range(len(jawaban)):
+                        print(jawaban[i], '\n')
+                    print('Setelah Jawaban')
+                    time.sleep(10)
                     menu_user()
                     pilihan = eval(input('Masukan pilihan :'))
                 elif pilihan == 4:

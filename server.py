@@ -62,10 +62,17 @@ def lihat_soal():
     soal = cursor.fetchall()
     return soal
 
+def lihat_jawaban(peserta):
+    jawaban = []
+    query = "select * from soal_peserta where id_peserta= %s ".%peserta
+    cursor.execute(query)
+    jawaban = cursor.fetchall()
+    return jawaban
 
 server.register_function(login_admin, 'login_admin')
 server.register_function(login_user, 'login_user')
 server.register_function(upload_soal, 'upload_soal')
 server.register_function(lihat_soal, 'lihat_soal')
 server.register_function(delete_soal, 'delete_soal')
+server.register_function(lihat_jawaban, 'lihat_jawaban')
 server.serve_forever()
