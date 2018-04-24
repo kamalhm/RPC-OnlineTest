@@ -3,6 +3,7 @@ import pymysql
 import random
 import time
 
+
 IP = 'localhost'
 PORT = 8000
 PORT_UP = 8001
@@ -43,7 +44,6 @@ def delete_soal():
     db.commit()
     return True
 
-
 def upload_soal(data):
     isi = data.split(',')
     print(isi)
@@ -63,7 +63,6 @@ def lihat_soal():
     cursor.execute(query)
     soal = cursor.fetchall()
     return soal
-
 def get_soal():
     query = "select * from soal_materi"
     cursor.execute(query)
@@ -73,15 +72,24 @@ def get_soal():
         soal_peserta.append(soal[random.randint(0,99)])
         soal_peserta[i].append("-")
     return soal_peserta
+  
 def waktu_selesai():
     return time.time() + 600
+  
 def waktu_mulai():
     return time.time()
-
+  
 def upload_nilai(nilai,id_peserta):
     query = f"update peserta set 'nilai'={nilai} where 'id_peserta'='{id_peserta}'"
     cursor.execute(query)
     db.commit()
+    
+def lihat_jawaban(peserta):
+    jawaban = []
+    query = "select * from soal_peserta where id_peserta= %s ".%peserta
+    cursor.execute(query)
+    jawaban = cursor.fetchall()
+    return jawaban
 
 
 server.register_function(login_admin, 'login_admin')
@@ -93,4 +101,6 @@ server.register_function(get_soal, 'get_soal')
 server.register_function(waktu_selesai, 'waktu_selesai')
 server.register_function(waktu_mulai, 'waktu_mulai')
 server.register_function(upload_nilai, 'upload_nilai')
+server.register_function(lihat_jawaban, 'lihat_jawaban')
+
 server.serve_forever()

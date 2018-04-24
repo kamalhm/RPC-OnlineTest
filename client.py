@@ -64,10 +64,12 @@ while True:
             elif pilihan == 3:
                 server.delete_soal()
 
+
         else:
             print('Salah password/username')
             time.sleep(0.5)
             os.system('cls')
+
     if pilihan == 2:
         os.system('cls')
         usr_user = input('Username :')
@@ -113,6 +115,7 @@ while True:
             elif pilihan == "2":
                 print("lihat nilai")
             elif pilihan == "3":
+
                 break
 
 
