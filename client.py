@@ -109,13 +109,16 @@ while True:
                             print("jawaban tidak benar")
                     jawab.append(jaw)
                 nilai = 0
-                for i in range(len(soal)) :
+                print(jawab)
+                for i in range(len(jawab)) :
                     if (soal[i][2] == jawab[i]):
                         nilai += 5
                 print("Nilai KAMYU adalah : ",nilai)
-                server.upload_nilai(nilai,usr_user)
+                server.upload_nilai(nilai,usr_user,usr_pass)
                 print("Nilai KAMYU sudah diupload")
-                server.upload_soal_peserta(soal,usr_user)
+                for i in range((len(soal)-len(jawab))):
+                    jawab.append('f')
+                server.upload_soal_peserta(soal,usr_user,jawab)
                 print("bukan")
 
 
