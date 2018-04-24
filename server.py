@@ -64,10 +64,16 @@ def lihat_soal():
 
 def lihat_jawaban(peserta):
     jawaban = []
-    query = "select * from soal_peserta where id_peserta= %s ".%peserta
+    query = "select soal, kunci_jawaban_peserta, kunci_jawaban from soal_materi NATURAL JOIN soal_peserta where soal_peserta.id_peserta= %s "%peserta
     cursor.execute(query)
     jawaban = cursor.fetchall()
     return jawaban
+
+def get_nama(peserta):
+    query = "select nama_peserta from peserta where id_peserta= %s "%peserta
+    cursor.execute(query)
+    tampung = cursor.fetchone()
+    return tampung
 
 server.register_function(login_admin, 'login_admin')
 server.register_function(login_user, 'login_user')
@@ -75,4 +81,5 @@ server.register_function(upload_soal, 'upload_soal')
 server.register_function(lihat_soal, 'lihat_soal')
 server.register_function(delete_soal, 'delete_soal')
 server.register_function(lihat_jawaban, 'lihat_jawaban')
+server.register_function(get_nama, 'get_nama')
 server.serve_forever()

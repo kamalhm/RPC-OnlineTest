@@ -2,6 +2,7 @@ import xmlrpc.client
 import getpass
 import os
 import time
+from prettytable import PrettyTable
 
 SERVER_IP = 'localhost'
 SERVER_PORT = '8000'
@@ -26,7 +27,7 @@ def menu_admin():
     print('1. Upload Soal')
     print('2. Lihat Soal')
     print('3. Delete Soal')
-    print('4. Nanti aja ah, mau logout dulu')
+    print('4. Log-out')
 
 
 def menu_user():
@@ -35,6 +36,7 @@ def menu_user():
     print('1. Mulai Kuis')
     print('2. Lihat Nilai')
     print('3. Lihat Jawaban')
+    print('4. Log-out')
 
 
 
@@ -63,19 +65,22 @@ while True:
                     lines = [line.rstrip('\n') for line in open(nama_file)]
                     for i in range(len(lines)):
                         server.upload_soal(lines[i])
-                    menu_admin()
-                    pilihan = eval(input('Masukan pilihan :'))
+                    print("Enter to lanjutkan")
+                    input()
                 elif pilihan == 2:
                     soal = server.lihat_soal()
                     for i in range(len(soal)):
                         print(soal[i], '\n')
-                    print('Setelah Soal, ada apa ya')
+                    print('Setelah Soal')
                     time.sleep(0.5)
-                    # time.sleep(2)
+                    print("Enter to lanjutkan")
+                    input()
                 elif pilihan == 3:
                     server.delete_soal()
                     print("Soal Deleted")
                     time.sleep(0.5)
+                    print("Enter to lanjutkan")
+                    input()
 
                 elif pilihan == 4:
                     valid_admin==False
@@ -96,31 +101,34 @@ while True:
                 usr_pass = input('Password :')
                 valid_user = server.login_user(usr_user, usr_pass)
             if valid_user:
-                print('Logged-in sebagai : User')
+                tampung = server.get_nama(usr_user)[0]
+                print("Logged-in sebagai : '%s'"%tampung)
                 time.sleep(0.5)
-                os.system('cls')
                 menu_user()
+                pilihan = eval(input('Masukan pilihan :'))
                 if pilihan == 1:
                     print("under construction")
-                    menu_user()
-                    pilihan = eval(input('Masukan pilihan :'))
+                    print("Enter to lanjutkan")
+                    input()
                 elif pilihan == 2:
                     print("under construction")
-                    menu_user()
-                    pilihan = eval(input('Masukan pilihan :'))
+                    print("Enter to lanjutkan")
+                    input()
                 elif pilihan == 3:
-                    print("Masuk")
+                    os.system('cls')
+                    print("---Lihat Jawaban---")
                     jawaban = server.lihat_jawaban(usr_user)
-                    for i in range(len(jawaban)):
-                        print(jawaban[i], '\n')
-                    print('Setelah Jawaban')
-                    time.sleep(10)
-                    menu_user()
-                    pilihan = eval(input('Masukan pilihan :'))
+                    t = PrettyTable(['Soal', 'Jawaban Anda', 'Kunci Jawaban'])
+                    for isi in jawaban:
+                        t.add_row(isi)
+                    print(t)
+                    print('Enter to lanjutkan')
+                    input()
                 elif pilihan == 4:
                     valid_user == False
                     print("Log Out Successful")
                     time.sleep(0.5)
+                    os.system('cls')
                     break
             else:
                 print('Salah password/username')
