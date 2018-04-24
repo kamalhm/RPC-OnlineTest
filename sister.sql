@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 24, 2018 at 02:42 PM
+-- Generation Time: Apr 24, 2018 at 02:44 PM
 -- Server version: 10.1.31-MariaDB
 -- PHP Version: 7.2.3
 
@@ -255,8 +255,8 @@ ALTER TABLE `soal_materi`
 --
 ALTER TABLE `soal_peserta`
   ADD PRIMARY KEY (`id_soalpeserta`),
-  ADD UNIQUE KEY `id_soal` (`id_soal`),
-  ADD KEY `soal_peserta_fk1` (`id_peserta`) USING BTREE;
+  ADD KEY `soal_peserta_fk1` (`id_peserta`) USING BTREE,
+  ADD KEY `id_soal` (`id_soal`) USING BTREE;
 
 --
 -- Constraints for dumped tables
