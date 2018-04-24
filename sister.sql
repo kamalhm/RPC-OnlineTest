@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 24, 2018 at 01:59 PM
+-- Generation Time: Apr 24, 2018 at 04:51 PM
 -- Server version: 10.1.31-MariaDB
--- PHP Version: 7.2.3
+-- PHP Version: 7.1.15
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
@@ -59,10 +59,10 @@ CREATE TABLE `peserta` (
 INSERT INTO `peserta` (`id_peserta`, `nama_peserta`, `nilai`) VALUES
 ('01', 'victor', 0),
 ('02', 'fathur', 0),
-('03', 'kamal', 0),
-('04', 'vina', 0),
-('05', 'uti', 0),
-('06', 'chlau', 0),
+('03', 'kamal', 10),
+('04', 'vina', 5),
+('05', 'uti', 25),
+('06', 'chlau', 99),
 ('07', 'abc', 0);
 
 -- --------------------------------------------------------
@@ -248,8 +248,8 @@ ALTER TABLE `soal_materi`
 --
 ALTER TABLE `soal_peserta`
   ADD PRIMARY KEY (`id_soalpeserta`),
-  ADD UNIQUE KEY `soal_peserta_fk1` (`id_peserta`),
-  ADD UNIQUE KEY `id_soal` (`id_soal`);
+  ADD KEY `soal_peserta_fk1` (`id_peserta`) USING BTREE,
+  ADD KEY `soal_peserta_fk2` (`id_soal`) USING BTREE;
 
 --
 -- Constraints for dumped tables
