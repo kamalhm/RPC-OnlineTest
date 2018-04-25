@@ -48,7 +48,7 @@ while True:
             menu_admin()
             pilihan = eval(input('Masukkan pilihan :'))
             if pilihan == 1:
-                nama_file = input('Masukkan nama file (format .csv)')
+                nama_file = input('Masukkan nama file (format .csv): ')
                 print('uploading...')
                 lines = [line.rstrip('\n') for line in open(nama_file)]
                 for i in range(len(lines)):
@@ -90,6 +90,8 @@ while True:
                 #print(soal)
                 waktu_mulai = server.waktu_mulai()
                 waktu_selesai = server.waktu_selesai()
+                print("waktu mulai: ",time.ctime(waktu_mulai))
+                print("waktu selesai: ",time.ctime(waktu_selesai))
                 jawab = []
                 for i in soal :
                     if (time.time() > waktu_selesai):

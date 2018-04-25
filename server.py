@@ -73,7 +73,7 @@ def get_soal():
     urutan = random.sample(idx,20)
     for i in range(0,20):
         soal_peserta.append(soal[urutan[i]])
-    print(soal_peserta)
+    #print(soal_peserta)
     return soal_peserta
   
 def waktu_selesai():
