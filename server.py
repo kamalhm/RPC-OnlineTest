@@ -1,5 +1,8 @@
 from xmlrpc.server import SimpleXMLRPCServer
 import pymysql
+import random
+import time
+
 
 IP = 'localhost'
 PORT = 8000
@@ -41,7 +44,6 @@ def delete_soal():
     db.commit()
     return True
 
-
 def upload_soal(data):
     isi = data.split(',')
     print(isi)
@@ -61,6 +63,52 @@ def lihat_soal():
     cursor.execute(query)
     soal = cursor.fetchall()
     return soal
+def get_soal():
+    query = "select * from soal_materi"
+    cursor.execute(query)
+    soal = cursor.fetchall()
+    #print('soal',soal)
+    soal_peserta = []
+    idx = [i for i in range(0,100)]
+    urutan = random.sample(idx,20)
+    for i in range(0,20):
+        soal_peserta.append(soal[urutan[i]])
+    print(soal_peserta)
+    return soal_peserta
+  
+def waktu_selesai():
+    return time.time() + 600
+  
+def waktu_mulai():
+    return time.time()
+  
+def upload_nilai(nilai,id_peserta,pwd):
+    query = f"update peserta set nilai={nilai} where peserta.id_peserta='{id_peserta}'"
+    #query = f"insert into peserta values ('{id_peserta}','{pwd}',{nilai})"
+    print(query)
+    cursor.execute(query)
+    db.commit()
+    
+def lihat_jawaban(peserta):
+    jawaban = []
+    query = "select * from soal_peserta where id_peserta= %s "%peserta
+    cursor.execute(query)
+    jawaban = cursor.fetchall()
+    return jawaban
+
+def upload_soal_peserta(soal,id_peserta,jawab):
+    for i in range(len(soal)):
+        id_soal_peserta = soal[i][0]+"_"+id_peserta
+        query = f"insert into soal_peserta values ('{id_soal_peserta}','{jawab[i]}','{id_peserta}','{soal[i][0]}')"
+        cursor.execute(query)
+        db.commit()
+
+def cek_peserta(id_peserta):
+    query = f"select * from soal_peserta where soal_peserta.id_peserta='{id_peserta}'"
+    cursor.execute(query)
+    kode_peserta = cursor.fetchall()
+    return kode_peserta
+
 
 
 server.register_function(login_admin, 'login_admin')
@@ -68,4 +116,12 @@ server.register_function(login_user, 'login_user')
 server.register_function(upload_soal, 'upload_soal')
 server.register_function(lihat_soal, 'lihat_soal')
 server.register_function(delete_soal, 'delete_soal')
+server.register_function(get_soal, 'get_soal')
+server.register_function(waktu_selesai, 'waktu_selesai')
+server.register_function(waktu_mulai, 'waktu_mulai')
+server.register_function(upload_nilai, 'upload_nilai')
+server.register_function(lihat_jawaban, 'lihat_jawaban')
+server.register_function(upload_soal_peserta, 'upload_soal_peserta')
+server.register_function(cek_peserta,'cek_peserta')
+
 server.serve_forever()
