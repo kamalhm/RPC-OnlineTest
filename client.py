@@ -82,51 +82,53 @@ while True:
             menu_user()
             pilihan = input("Masukkan pilihan : ")
             if pilihan == "1":
-                peserta = server.cek_peserta(usr_user)
-                if peserta[0][2] == usr_user:
-                    print("Anda sudah melakukan kuis")
-                    time.sleep(2)
-                    break
-                else:
-                    soal = []
-                    print("mulai kuis")
-                    print("selesaikan dalam 10 menit")
-                    soal = server.get_soal()
-                    waktu_mulai = server.waktu_mulai()
-                    waktu_selesai = server.waktu_selesai()
-                    jawab = []
-                    for i in soal :
-                        if (time.time() > waktu_selesai):
-                            print("waktu habis")
-                            time.sleep(3)
-                            break                    
-                        print(i[1])
-                        print("a. ",i[3])
-                        print("b. ",i[4])
-                        print("c. ",i[5])
-                        print("d. ",i[6])
-                        while True:
-                            jaw = input("masukkan jawaban(a/b/c/d) : ")
-                            if (jaw == 'a') or (jaw == 'b') or (jaw == 'c') or (jaw == 'd'):
-                                break
-                            else :
-                                print("jawaban tidak benar")
-                        jawab.append(jaw)
-                    nilai = 0
-                    print(jawab)
-                    for i in range(len(jawab)) :
-                        if (soal[i][2] == jawab[i]):
-                            nilai += 5
-                    print("Nilai KAMYU adalah : ",nilai)
-                    server.upload_nilai(nilai,usr_user,usr_pass)
-                    print("Nilai KAMYU sudah diupload")
-                    for i in range((len(soal)-len(jawab))):
-                        jawab.append('-')
-                    server.upload_soal_peserta(soal,usr_user,jawab)
+                soal = []
+                print("mulai kuis")
+                print("selesaikan dalam 10 menit")
+                # time.sleep(1)
+                soal = server.get_soal()
+                print(soal)
+                waktu_mulai = server.waktu_mulai()
+                waktu_selesai = server.waktu_selesai()
+                
+                for i in range(0,20) :
+                    if (time.time() > waktu_selesai):
+                        print("waktu habis")
+                        time.sleep(3)
+                        break                    
+
+                    print(soal[i][1])
+                    print("a. ",soal[i][3])
+                    print("b. ",soal[i][4])
+                    print("c. ",soal[i][5])
+                    print("d. ",soal[i][6])
+                    while True:
+                        jaw = input("masukkan jawaban(a/b/c/d) : ")
+                        if (jaw == 'a') or (jaw == 'b') or (jaw == 'c') or (jaw == 'd'):
+                            break
+                        else :
+                            print("jawaban tidak benar")
+                    soal[i][7] = jaw
+
+                nilai = 0
+                for i in soal :
+                    if (i[2] == i[7]):
+                        nilai += 5
+
+                print("Nilai KAMYU adalah : ",nilai)
+                server.upload_nilai(nilai,usr_user)
+                print("Nilai KAMYU sudah diupload")
+                server.upload_soal_peserta(soal,usr_user)
+                print("bukan")
+
+
             elif pilihan == "2":
                 print("lihat nilai")
             elif pilihan == "3":
+
                 break
+
+
         else:
             print('Salah password/username')
             time.sleep(0.5)

@@ -1,13 +1,15 @@
 -- phpMyAdmin SQL Dump
--- version 4.5.1
--- http://www.phpmyadmin.net
+-- version 4.7.9
+-- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 18, 2018 at 08:14 AM
--- Server version: 10.1.9-MariaDB
--- PHP Version: 7.0.1
+-- Generation Time: Apr 24, 2018 at 02:44 PM
+-- Server version: 10.1.31-MariaDB
+-- PHP Version: 7.2.3
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+SET AUTOCOMMIT = 0;
+START TRANSACTION;
 SET time_zone = "+00:00";
 
 
@@ -74,18 +76,6 @@ CREATE TABLE `relasi_mengupload` (
   `id_admin` varchar(10) NOT NULL,
   `id_soal` varchar(10) NOT NULL,
   `tanggal_upload` varchar(10) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
--- --------------------------------------------------------
-
---
--- Table structure for table `relasi_random`
---
-
-CREATE TABLE `relasi_random` (
-  `id_random` varchar(10) NOT NULL,
-  `id_upload` varchar(10) NOT NULL,
-  `id_soalpeserta` varchar(10) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
@@ -219,8 +209,16 @@ INSERT INTO `soal_materi` (`id_soal`, `soal`, `kunci_jawaban`, `option_a`, `opti
 CREATE TABLE `soal_peserta` (
   `id_soalpeserta` varchar(10) NOT NULL,
   `kunci_jawaban_peserta` varchar(1) DEFAULT NULL,
-  `id_peserta` varchar(10) NOT NULL
+  `id_peserta` varchar(10) NOT NULL,
+  `id_soal` varchar(10) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `soal_peserta`
+--
+
+INSERT INTO `soal_peserta` (`id_soalpeserta`, `kunci_jawaban_peserta`, `id_peserta`, `id_soal`) VALUES
+('1', '1', '1', '1');
 
 --
 -- Indexes for dumped tables
@@ -247,14 +245,6 @@ ALTER TABLE `relasi_mengupload`
   ADD KEY `relasi_mengupload_Soal_Materi_FK` (`id_soal`);
 
 --
--- Indexes for table `relasi_random`
---
-ALTER TABLE `relasi_random`
-  ADD PRIMARY KEY (`id_random`),
-  ADD KEY `relasi_rendom_relasi_mengupload_fk` (`id_upload`),
-  ADD KEY `relasi_rendom_soal_peserta_fk` (`id_soalpeserta`);
-
---
 -- Indexes for table `soal_materi`
 --
 ALTER TABLE `soal_materi`
@@ -265,7 +255,8 @@ ALTER TABLE `soal_materi`
 --
 ALTER TABLE `soal_peserta`
   ADD PRIMARY KEY (`id_soalpeserta`),
-  ADD UNIQUE KEY `soal_peserta_fk1` (`id_peserta`);
+  ADD KEY `soal_peserta_fk1` (`id_peserta`) USING BTREE,
+  ADD KEY `id_soal` (`id_soal`) USING BTREE;
 
 --
 -- Constraints for dumped tables
@@ -277,13 +268,7 @@ ALTER TABLE `soal_peserta`
 ALTER TABLE `relasi_mengupload`
   ADD CONSTRAINT `relasi_mengupload_Soal_Materi_FK` FOREIGN KEY (`id_soal`) REFERENCES `soal_materi` (`id_soal`),
   ADD CONSTRAINT `relasi_mengupload_admin_fk` FOREIGN KEY (`id_admin`) REFERENCES `admin` (`id_admin`);
-
---
--- Constraints for table `relasi_random`
---
-ALTER TABLE `relasi_random`
-  ADD CONSTRAINT `relasi_rendom_relasi_mengupload_fk` FOREIGN KEY (`id_upload`) REFERENCES `relasi_mengupload` (`id_upload`),
-  ADD CONSTRAINT `relasi_rendom_soal_peserta_fk` FOREIGN KEY (`id_soalpeserta`) REFERENCES `soal_peserta` (`id_soalpeserta`);
+COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;

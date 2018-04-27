@@ -67,13 +67,12 @@ def get_soal():
     query = "select * from soal_materi"
     cursor.execute(query)
     soal = cursor.fetchall()
-    #print('soal',soal)
+    print('soal',soal)
     soal_peserta = []
-    idx = [i for i in range(0,100)]
-    urutan = random.sample(idx,20)
     for i in range(0,20):
-        soal_peserta.append(soal[urutan[i]])
-    print(soal_peserta)
+        soal_peserta.append(soal[random.randint(0,99)])
+        soal_peserta[i][7].append("-")
+    #print('soal peserta0',soal_peserta[0][0])    
     return soal_peserta
   
 def waktu_selesai():
@@ -82,10 +81,8 @@ def waktu_selesai():
 def waktu_mulai():
     return time.time()
   
-def upload_nilai(nilai,id_peserta,pwd):
-    query = f"update peserta set nilai={nilai} where peserta.id_peserta='{id_peserta}'"
-    #query = f"insert into peserta values ('{id_peserta}','{pwd}',{nilai})"
-    print(query)
+def upload_nilai(nilai,id_peserta):
+    query = f"update peserta set 'nilai'={nilai} where 'id_peserta'='{id_peserta}'"
     cursor.execute(query)
     db.commit()
     
@@ -96,19 +93,18 @@ def lihat_jawaban(peserta):
     jawaban = cursor.fetchall()
     return jawaban
 
-def upload_soal_peserta(soal,id_peserta,jawab):
+
+def lihat_nilai(id):
+    query = "select * from peserta where id_peserta= %s"%id
+    cursor.execute(query)
+    nilai = cursor.fetchone()
+    return nilai
+
+def upload_soal_peserta(soal,id_peserta):
     for i in range(len(soal)):
-        id_soal_peserta = soal[i][0]+"_"+id_peserta
-        query = f"insert into soal_peserta values ('{id_soal_peserta}','{jawab[i]}','{id_peserta}','{soal[i][0]}')"
+        query = f"insert into soal_peserta values ('{soal[i][0]}_{id_peserta}','{soal[i][7]}','{id_peserta}','{soal[i][0]}')"
         cursor.execute(query)
         db.commit()
-
-def cek_peserta(id_peserta):
-    query = f"select * from soal_peserta where soal_peserta.id_peserta='{id_peserta}'"
-    cursor.execute(query)
-    kode_peserta = cursor.fetchall()
-    return kode_peserta
-
 
 
 server.register_function(login_admin, 'login_admin')
@@ -121,7 +117,7 @@ server.register_function(waktu_selesai, 'waktu_selesai')
 server.register_function(waktu_mulai, 'waktu_mulai')
 server.register_function(upload_nilai, 'upload_nilai')
 server.register_function(lihat_jawaban, 'lihat_jawaban')
+server.register_function(lihat_nilai, 'lihat_nilai')
 server.register_function(upload_soal_peserta, 'upload_soal_peserta')
-server.register_function(cek_peserta,'cek_peserta')
 
 server.serve_forever()
