@@ -5,7 +5,7 @@ import time
 from prettytable import PrettyTable
 
 SERVER_IP = 'localhost'
-SERVER_PORT = '8000'
+SERVER_PORT = '8002'
 server = xmlrpc.client.ServerProxy(
     'http://{ip}:{port}'.format(ip=SERVER_IP, port=SERVER_PORT)
 )
@@ -153,7 +153,7 @@ while True:
 
                 elif pilihan == 2:
                     os.system('cls')
-                    nilai = server.lihat_nilai(usr_user)[2]
+                    nilai = server.lihat_nilai(usr_user)[0]
                     if not nilai:
                         temp = server.get_nama_peserta(usr_user)[0]
                         print("%s, anda belum mulai kuis."%temp)
