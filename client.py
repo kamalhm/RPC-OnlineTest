@@ -120,15 +120,18 @@ while True:
                     print("waktu selesai: ",time.ctime(waktu_selesai))
                     jawab = []
                     for i in soal :
+                        os.system('cls')
                         if (time.time() > waktu_selesai):
                             print("waktu habis")
                             time.sleep(3)
                             break                    
-                        print(i[1])
-                        print("a. ",i[3])
-                        print("b. ",i[4])
-                        print("c. ",i[5])
-                        print("d. ",i[6])
+                        t = PrettyTable([i[1]])
+                        t.align[i[1]] = 'l'
+                        t.add_row(["a. %s"%i[3]])
+                        t.add_row(["b. %s"%i[4]])
+                        t.add_row(["c. %s"%i[5]])
+                        t.add_row(["d. %s"%i[6]])
+                        print(t)
                         while True:
                             jaw = input("masukkan jawaban(a/b/c/d) : ")
                             if (jaw == 'a') or (jaw == 'b') or (jaw == 'c') or (jaw == 'd'):
