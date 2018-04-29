@@ -5,7 +5,7 @@ import time
 
 
 IP = 'localhost'
-PORT = 8000
+PORT = 8002
 PORT_UP = 8001
 DB_SERVER = 'localhost'
 DB_USER = 'root'
