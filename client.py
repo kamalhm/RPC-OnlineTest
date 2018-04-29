@@ -51,7 +51,7 @@ while True:
             os.system('cls')
             if valid_admin==False:
                 usr_user = input('Username :')
-                usr_pass = input('Password :')
+                usr_pass = getpass.getpass('Password :')
                 valid_user = server.login_admin(usr_user, usr_pass)
             if valid_admin:
                 menu_admin()
@@ -103,7 +103,7 @@ while True:
             os.system('cls')
             if valid_user==False:
                 usr_user = input('Username :')
-                usr_pass = input('Password :')
+                usr_pass = getpass.getpass('Password :')
                 valid_user = server.login_user(usr_user, usr_pass)
             if valid_user:
                 menu_user()
@@ -142,12 +142,11 @@ while True:
                         if (soal[i][2] == jawab[i]):
                             nilai += 5
                     print("Nilai Anda adalah : ",nilai)
-                    server.upload_nilai(nilai,usr_user)
+                    server.upload_nilai(nilai,usr_user,usr_pass)
                     print("Nilai Anda sudah diupload")
                     for i in range((len(soal)-len(jawab))):
                         jawab.append('f')
                     server.upload_soal_peserta(soal,usr_user,jawab)
-                    print("bukan")
                     print("Enter to lanjutkan")
                     input()
 
