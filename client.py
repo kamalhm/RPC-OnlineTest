@@ -159,7 +159,7 @@ while True:
                         time.sleep(2)
                     else:
                         temp = server.get_nama_peserta(usr_user)[0]
-                        print("Hai %s, nilai anda adalah = %d"%temp,nilai)
+                        print("Hai %s, nilai anda adalah = %d"% (temp,nilai))
                         print("Enter to lanjutkan")
                         input()
                 elif pilihan == 3:
