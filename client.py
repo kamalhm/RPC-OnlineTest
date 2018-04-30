@@ -13,31 +13,36 @@ server = xmlrpc.client.ServerProxy(
 
 def menu_awal():
     os.system('cls')
-    print("SELAMAT DATANG DI \nKUIS ONLINE BAHASA INGGRIS")
-    print("MENU")
-    print("1. Login Admin")
-    print("2. Login User")
-    print("3. Exit")
+    t = PrettyTable(["SELAMAT DATANG DI KUIS ONLINE BAHASA INGGRIS"])
+    t.align["SELAMAT DATANG DI KUIS ONLINE BAHASA INGGRIS"] = 'l'
+    t.add_row(['1. Login Admin'])
+    t.add_row(['2. Login User'])
+    t.add_row(['3. Exit'])
+    print(t)
 
 
 def menu_admin():
     os.system('cls')
     temp = server.get_nama_admin(usr_user)[0]
-    print("SELAMAT DATANG : %s\n"%temp)
-    print('1. Upload Soal')
-    print('2. Lihat Soal')
-    print('3. Delete Soal')
-    print('4. Log-out')
+    t = PrettyTable(["SELAMAT DATANG : %s\n"%temp])
+    t.align["SELAMAT DATANG : %s\n"%temp] = 'l'
+    t.add_row(['1. Upload Soal'])
+    t.add_row(['2. Lihat Soal'])
+    t.add_row(['3. Delete Soal'])
+    t.add_row(['4. Log-out'])
+    print(t)
 
 
 def menu_user():
     os.system('cls')
     temp = server.get_nama_peserta(usr_user)[0]
-    print("SELAMAT DATANG : %s\n"%temp)
-    print('1. Mulai Kuis')
-    print('2. Lihat Nilai')
-    print('3. Lihat Jawaban')
-    print('4. Log-out')
+    t = PrettyTable(["SELAMAT DATANG : %s\n"%temp])
+    t.align[i[1]] = 'l'
+    t.add_row(['1. Mulai Kuis'])
+    t.add_row(['2. Lihat Nilai'])
+    t.add_row(['3. Lihat Jawaban'])
+    t.add_row(['4. Log-out'])
+    print(t)
 
 
 while True:
