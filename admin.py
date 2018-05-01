@@ -2,6 +2,7 @@ import xmlrpc.client
 import getpass
 import os
 import time
+from prettytable import PrettyTable
 
 SERVER_IP = 'localhost'
 SERVER_PORT = '8000'
@@ -12,74 +13,94 @@ server = xmlrpc.client.ServerProxy(
 
 def menu_awal():
     os.system('clear')
-    print("SELAMAT DATANG DI \nKUIS ONLINE BAHASA INGGRIS")
-    print("MENU ADMIN")
-    print("1. Login")
-    print("0. Keluar")
-    return eval(input("Masukkan pilihan\n"))
+    t = PrettyTable(["SELAMAT DATANG ADMIN DI KUIS ONLINE BAHASA INGGRIS"])
+    t.align["SELAMAT DATANG ADMIN DI KUIS ONLINE BAHASA INGGRIS"] = 'l'
+    t.add_row(['1. Login Admin'])
+    t.add_row(['0. Exit'])
+    print(t)
 
 
 def menu_admin():
     os.system('clear')
-    print('1. Upload Soal')
-    print('2. Lihat Soal')
-    print('3. Delete Soal')
-    print('4. Set Rentang Ujian')
-    print('5. Set Durasi Ujian')
-    print('0. Keluar')
-    return eval(input("Masukkan pilihan\n"))
+    temp = server.get_id_admin(usr_user)[0]
+    t = PrettyTable(["SELAMAT DATANG : "+temp])
+    t.align["SELAMAT DATANG : "+temp] = 'l'
+    t.add_row(['1. Upload Soal'])
+    t.add_row(['2. Lihat Soal'])
+    t.add_row(['3. Delete Soal'])
+    t.add_row(['4. Set Rentang Ujian'])
+    t.add_row(['5. Set Durasi Ujian'])
+    t.add_row(['0. Log-out'])
+    print(t)
 
 
 while True:
-    pil = menu_awal()
-    if pil == 1:
-        os.system('clear')
-        adm_user = input('Username :')
-        adm_pass = getpass.getpass('Password :')
-        if server.login_admin(adm_user, adm_pass) == True:
-            print('Berhasil login sebagai admin')
-            time.sleep(1)
-            pil_admin = menu_admin()
-            if pil_admin == 1:
-                nama_file = input('Masukan nama file (format.csv)')
-                print('Uploading...')
-                lines = [line.rstrip('\n') for line in open(nama_file)]
-                for i in range(len(lines)):
-                    server.upload_soal(lines[i])
-                print('Upload berhasil.')
-                time.sleep(0.5)
-            elif pil_admin == 2:
-                soal = server.lihat_soal()
-                for i in range(len(soal)):
-                    print(soal[i], '\n')
-                input('Tekan enter / karakter apapun untuk lanjut')
-            elif pil_admin == 3:
-                os.system('clear')
-                print('Mendelete soal...')
-                server.delete_soal()
-                print("Soal berhasil dihapus.")
-                input('Tekan enter / karakter apapun untuk lanjut')
-            elif pil_admin == 4:
-                os.system('clear')
-                waktu_mulai = input("Masukan jam mulai kuis : \n")
-                waktu_selesai = input("Masukan jam selesai kuis : \n")
-                if server.set_start_time(waktu_mulai) and server.set_end_time(waktu_selesai):
-                    print('Waktu mulai dan waktu selesai berhasil di set pada')
-                    print(f'Pukul {waktu_mulai} - {waktu_selesai}')
-                    time.sleep(2)
+    valid_admin = False
+    os.system('clear')
+    menu_awal()
+    pilihan = eval(input('Masukan pilihan :'))
+    if pilihan == 1:
+        while True:
+            os.system('clear')
+            if valid_admin == False:
+                usr_user = input('Username :')
+                usr_pass = getpass.getpass('Password :')
+                valid_admin = server.login_admin(usr_user, usr_pass)
+            if valid_admin:
+                menu_admin()
+                pilihan = eval(input('Masukkan pilihan :'))
+                if pilihan == 1:
+                    nama_file = input('Masukan nama file (format .csv)')
+                    print('Uploading...')
+                    lines = [line.rstrip('\n') for line in open(nama_file)]
+                    for i in range(len(lines)):
+                        server.upload_soal(lines[i])
+                    print("Enter to lanjutkan")
+                    input()
+                elif pilihan == 2:
+                    soal = server.lihat_soal()
+                    for i in range(len(soal)):
+                        print(soal[i], '\n')
+                    time.sleep(0.5)
+                    print("Enter to lanjutkan")
+                    input()
+                elif pilihan == 3:
+                    server.delete_soal()
+                    print("Soal Deleted")
+                    time.sleep(0.5)
+                    print("Enter to lanjutkan")
+                    input()
+
+                elif pilihan == 4:
+                    os.system('clear')
+                    waktu_mulai = input("Masukan jam mulai kuis : \n")
+                    waktu_selesai = input("Masukan jam selesai kuis : \n")
+                    if server.set_start_time(waktu_mulai) and server.set_end_time(waktu_selesai):
+                        print(
+                            'Waktu mulai dan waktu selesai berhasil di set pada')
+                        print(f'Pukul {waktu_mulai} - {waktu_selesai}')
+                        time.sleep(2)
+                elif pilihan == 5:
+                    os.system('clear')
+                    durasi = input(
+                        "Masukan durasi kuis (satuan menit) : \n")
+                    server.set_durasi(durasi)
+                    print(
+                        f'Durasi ujian telah di set sebesar {durasi} menit')
+                    time.sleep(3)
+
+                elif pilihan == 0:
+                    valid_admin == False
+                    print("Log Out Successful")
+                    time.sleep(0.5)
+                    break
             else:
                 os.system('clear')
-                durasi = input("Masukan durasi kuis (satuan menit) : \n")
-                server.set_durasi(durasi)
-                print(f'Durasi ujian telah di set sebesar {durasi} menit')
-                # print(f'waktu saat ini adalah : \n{time.ctime()}')
-                # print(
-                #     f'Akan selesai pada : \n{time.ctime(server.waktu_selesai())}')
-                # input()
-        else:
-            print('Salah username / password')
-            time.sleep(0.5)
-            os.system('clear')
-
-    else:
+                print('Salah password/username')
+                time.sleep(0.5)
+                os.system('clear')
+                break
+    elif pilihan == 0:
+        print("Thank you")
+        time.sleep(0.5)
         break

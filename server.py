@@ -167,22 +167,22 @@ def cek_peserta(id_peserta):
     return kode_peserta
 
 
-def get_np(peserta):
-    query = "select nama_peserta from peserta where id_peserta= %s " % peserta
+def get_nama_peserta(peserta):
+    query = "select id_peserta from peserta where id_peserta= %s " % peserta
     cursor.execute(query)
     tampung = cursor.fetchone()
     return tampung[0]
 
 
-def get_ad(admin):
-    query = "select nama_admin from admin where id_admin= %s " % admin
+def get_id_admin(admin):
+    query = "select id_admin from admin where id_admin= %s " % admin
     cursor.execute(query)
     tampung = cursor.fetchone()
     return tampung
 
 
 def daftar(id, password):
-    query = "INSERT INTO `peserta` (`id_peserta`, `nama_peserta`) \
+    query = "INSERT INTO `peserta` (`id_peserta`, `password`) \
     VALUES ('{a}', '{b}')".format(
         a=id, b=password)
     print(query)
@@ -204,15 +204,15 @@ server.register_function(lihat_jawaban, 'lihat_jawaban')
 server.register_function(lihat_nilai, 'lihat_nilai')
 server.register_function(upload_soal_peserta, 'upload_soal_peserta')
 server.register_function(cek_peserta, 'cek_peserta')
-server.register_function(get_ad, 'get_ad')
-server.register_function(get_np, 'get_np')
+server.register_function(get_id_admin, 'get_id_admin')
+server.register_function(get_nama_peserta, 'get_nama_peserta')
 server.register_function(daftar, 'daftar')
 server.register_function(set_start_time, 'set_start_time')
 server.register_function(get_start_time, 'get_start_time')
 server.register_function(set_end_time, 'set_end_time')
 server.register_function(get_end_time, 'get_end_time')
 server.register_function(set_durasi, 'set_durasi')
-server.register_function(set_durasi, 'get_durasi')
+server.register_function(get_durasi, 'get_durasi')
 
 
 server.serve_forever()
