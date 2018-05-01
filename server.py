@@ -5,7 +5,7 @@ import time
 
 
 IP = 'localhost'
-PORT = 8002
+PORT = 8000
 PORT_UP = 8001
 DB_SERVER = 'localhost'
 DB_USER = 'root'
@@ -16,6 +16,29 @@ print("Listening on port", PORT)
 db = pymysql.connect(DB_SERVER, DB_USER, DB_PASS, DB_NAME)
 cursor = db.cursor()
 
+def set_start_time(time):
+    f = open("time.txt", "w+")
+    f.write(time)
+    f.close()
+    return True
+
+
+def set_end_time(time):
+    f = open("time.txt", "a+")
+    f.write('\n'+time)
+    f.close()
+    return True
+
+def get_end_time():
+    f = open("time.txt", "r")
+    times = f.readlines()
+    return int(times[1])
+
+
+def get_start_time():
+    f = open("time.txt", "r")
+    times = f.readlines()
+    return int(times[0])
 
 def login_admin(username, password):
     admin = []
@@ -73,7 +96,6 @@ def get_soal():
     urutan = random.sample(idx,20)
     for i in range(0,20):
         soal_peserta.append(soal[urutan[i]])
-    print(soal_peserta)
     return soal_peserta
   
 def waktu_selesai():
@@ -84,7 +106,6 @@ def waktu_mulai():
   
 def upload_nilai(nilai,id_peserta,pwd):
     query = f"update peserta set nilai={nilai} where peserta.id_peserta='{id_peserta}'"
-    print(query)
     cursor.execute(query)
     db.commit()
     
@@ -120,6 +141,33 @@ def upload_soal_peserta(soal,id_peserta,jawab):
         cursor.execute(query)
         db.commit()
 
+def cek_peserta(id_peserta):
+    query = f"select * from soal_peserta where soal_peserta.id_peserta='{id_peserta}'"
+    cursor.execute(query)
+    kode_peserta = cursor.fetchall()
+    return kode_peserta
+
+def get_np(peserta):
+    query = "select nama_peserta from peserta where id_peserta= %s " % peserta
+    cursor.execute(query)
+    tampung = cursor.fetchone()
+    return tampung[0]
+
+def get_ad(admin):
+    query = "select nama_admin from admin where id_admin= %s " % admin
+    cursor.execute(query)
+    tampung = cursor.fetchone()
+    return tampung
+
+
+def daftar(id, password):
+    query = "INSERT INTO `peserta` (`id_peserta`, `nama_peserta`) \
+    VALUES ('{a}', '{b}')".format(
+        a=id, b=password)
+    print(query)
+    cursor.execute(query)
+    db.commit()
+    return True
 
 server.register_function(login_admin, 'login_admin')
 server.register_function(login_user, 'login_user')
@@ -135,5 +183,13 @@ server.register_function(get_nama_admin, 'get_nama_admin')
 server.register_function(get_nama_peserta, 'get_nama_peserta')
 server.register_function(lihat_nilai, 'lihat_nilai')
 server.register_function(upload_soal_peserta, 'upload_soal_peserta')
+server.register_function(cek_peserta, 'cek_peserta')
+server.register_function(get_ad, 'get_ad')
+server.register_function(get_np, 'get_np')
+server.register_function(daftar, 'daftar')
+server.register_function(set_start_time, 'set_start_time')
+server.register_function(get_start_time, 'get_start_time')
+server.register_function(set_end_time, 'set_end_time')
+server.register_function(get_end_time, 'get_end_time')
 
 server.serve_forever()
