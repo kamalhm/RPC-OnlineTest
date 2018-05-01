@@ -16,7 +16,7 @@ def menu_awal():
     print("MENU ADMIN")
     print("1. Login")
     print("0. Keluar")
-    return eval(input("Masukkan pilihan"))
+    return eval(input("Masukkan pilihan\n"))
 
 
 def menu_admin():
@@ -24,56 +24,62 @@ def menu_admin():
     print('1. Upload Soal')
     print('2. Lihat Soal')
     print('3. Delete Soal')
+    print('4. Set Rentang Ujian')
+    print('5. Set Durasi Ujian')
     print('0. Keluar')
-    return eval(input("Masukkan pilihan"))
+    return eval(input("Masukkan pilihan\n"))
 
 
-start = input('Masukan waktu mulai')
-if server.set_start_time(start):
-    print('berhasil')
-end = input('Masukan waktu selesai')
-if server.set_end_time(end):
-    print('berhasil end time')
+while True:
+    pil = menu_awal()
+    if pil == 1:
+        os.system('clear')
+        adm_user = input('Username :')
+        adm_pass = getpass.getpass('Password :')
+        if server.login_admin(adm_user, adm_pass) == True:
+            print('Berhasil login sebagai admin')
+            time.sleep(1)
+            pil_admin = menu_admin()
+            if pil_admin == 1:
+                nama_file = input('Masukan nama file (format.csv)')
+                print('Uploading...')
+                lines = [line.rstrip('\n') for line in open(nama_file)]
+                for i in range(len(lines)):
+                    server.upload_soal(lines[i])
+                print('Upload berhasil.')
+                time.sleep(0.5)
+            elif pil_admin == 2:
+                soal = server.lihat_soal()
+                for i in range(len(soal)):
+                    print(soal[i], '\n')
+                input('Tekan enter / karakter apapun untuk lanjut')
+            elif pil_admin == 3:
+                os.system('clear')
+                print('Mendelete soal...')
+                server.delete_soal()
+                print("Soal berhasil dihapus.")
+                input('Tekan enter / karakter apapun untuk lanjut')
+            elif pil_admin == 4:
+                os.system('clear')
+                waktu_mulai = input("Masukan jam mulai kuis : \n")
+                waktu_selesai = input("Masukan jam selesai kuis : \n")
+                if server.set_start_time(waktu_mulai) and server.set_end_time(waktu_selesai):
+                    print('Waktu mulai dan waktu selesai berhasil di set pada')
+                    print(f'Pukul {waktu_mulai} - {waktu_selesai}')
+                    time.sleep(2)
+            else:
+                os.system('clear')
+                durasi = input("Masukan durasi kuis (satuan menit) : \n")
+                server.set_durasi(durasi)
+                print(f'Durasi ujian telah di set sebesar {durasi} menit')
+                # print(f'waktu saat ini adalah : \n{time.ctime()}')
+                # print(
+                #     f'Akan selesai pada : \n{time.ctime(server.waktu_selesai())}')
+                # input()
+        else:
+            print('Salah username / password')
+            time.sleep(0.5)
+            os.system('clear')
 
-
-# if server.get_start_time()[0] == 5:
-#     print('dapat 5')
-    
-# if server.get_end_time()[0] == 6:
-#     print('dapat 6')    
-    
-print(server.get_start_time() == 55)
-print(server.get_end_time() == 66)   
-   
-
-# while True:
-#     if menu_awal() == 1:
-#         adm_user = input('Username :')
-#         adm_pass = getpass.getpass('Password :')
-#         if server.login_admin(adm_user, adm_pass) == True:
-#             print('Berhasil login sebagai admin')
-#             time.sleep(0.5)
-#             if menu_admin() == 1:
-#                 nama_file = input('Masukan nama file (format.csv)')
-#                 print('Uploading...')
-#                 lines = [line.rstrip('\n') for line in open(nama_file)]
-#                 for i in range(len(lines)):
-#                     server.upload_soal(lines[i])
-#                 print('Upload berhasil.')
-#                 time.sleep(0.5)
-#             if menu_admin() == 2:
-#                 soal = server.lihat_soal()
-#                 for i in range(len(soal)):
-#                     print(soal[i], '\n')
-#                 input('Tekan enter / karakter apapun untuk lanjut')
-#             if menu_admin() == 3:
-#                 print('Mendelete soal...')
-#                 server.delete_soal()
-#                 input('Tekan enter / karakter apapun untuk lanjut')
-#         else:
-#             print('Salah username / password')
-#             time.sleep(0.5)
-#             os.system('clear')
-
-#     elif (menu_awal() == 0):
-#         break
+    else:
+        break

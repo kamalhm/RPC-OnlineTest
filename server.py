@@ -106,8 +106,23 @@ def get_soal():
     return soal_peserta
 
 
+def set_durasi(durasi):
+    f = open("durasi.txt", "w+")
+    detik = int(durasi)*60
+    print(detik)
+    f.write(str(detik))
+    f.close()
+    return True
+
+
+def get_durasi():
+    f = open("durasi.txt", "r")
+    times = f.readlines()
+    return int(times[0])
+
+
 def waktu_selesai():
-    return time.time() + 600
+    return time.time() + get_durasi()
 
 
 def waktu_mulai():
@@ -196,6 +211,8 @@ server.register_function(set_start_time, 'set_start_time')
 server.register_function(get_start_time, 'get_start_time')
 server.register_function(set_end_time, 'set_end_time')
 server.register_function(get_end_time, 'get_end_time')
+server.register_function(set_durasi, 'set_durasi')
+server.register_function(set_durasi, 'get_durasi')
 
 
 server.serve_forever()

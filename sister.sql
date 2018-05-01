@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.7.9
+-- version 4.7.0
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 24, 2018 at 02:44 PM
--- Server version: 10.1.31-MariaDB
--- PHP Version: 7.2.3
+-- Generation Time: May 01, 2018 at 09:30 AM
+-- Server version: 10.1.25-MariaDB
+-- PHP Version: 7.1.7
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
@@ -30,14 +30,14 @@ SET time_zone = "+00:00";
 
 CREATE TABLE `admin` (
   `id_admin` varchar(10) NOT NULL,
-  `nama_admin` varchar(255) NOT NULL
+  `password_admin` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `admin`
 --
 
-INSERT INTO `admin` (`id_admin`, `nama_admin`) VALUES
+INSERT INTO `admin` (`id_admin`, `password_admin`) VALUES
 ('11', 'ftr');
 
 -- --------------------------------------------------------
@@ -48,7 +48,7 @@ INSERT INTO `admin` (`id_admin`, `nama_admin`) VALUES
 
 CREATE TABLE `peserta` (
   `id_peserta` varchar(10) NOT NULL,
-  `nama_peserta` varchar(255) DEFAULT NULL,
+  `password` varchar(255) DEFAULT NULL,
   `nilai` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
@@ -56,14 +56,16 @@ CREATE TABLE `peserta` (
 -- Dumping data for table `peserta`
 --
 
-INSERT INTO `peserta` (`id_peserta`, `nama_peserta`, `nilai`) VALUES
+INSERT INTO `peserta` (`id_peserta`, `password`, `nilai`) VALUES
 ('01', 'victor', 0),
 ('02', 'fathur', 0),
-('03', 'kamal', 0),
-('04', 'vina', 0),
-('05', 'uti', 0),
-('06', 'chlau', 0),
-('07', 'abc', 0);
+('03', 'kamal', 30),
+('04', 'vina', 40),
+('05', 'uti', 30),
+('06', 'chlau', 99),
+('07', 'abc', 0),
+('333', '333', 0),
+('jejeng', 'jejeng', 0);
 
 -- --------------------------------------------------------
 
@@ -218,7 +220,67 @@ CREATE TABLE `soal_peserta` (
 --
 
 INSERT INTO `soal_peserta` (`id_soalpeserta`, `kunci_jawaban_peserta`, `id_peserta`, `id_soal`) VALUES
-('1', '1', '1', '1');
+('AA04_03', 'a', '03', 'AA04'),
+('AA04_04', 'f', '04', 'AA04'),
+('AA05_04', 'f', '04', 'AA05'),
+('AA06_03', 'a', '03', 'AA06'),
+('AA08_05', 'b', '05', 'AA08'),
+('AA10_04', 'f', '04', 'AA10'),
+('AA10_05', 'b', '05', 'AA10'),
+('AA15_04', 'f', '04', 'AA15'),
+('AA17_04', 'f', '04', 'AA17'),
+('AA17_05', 'b', '05', 'AA17'),
+('AA18_03', 'a', '03', 'AA18'),
+('AA19_05', 'b', '05', 'AA19'),
+('AA24_03', 'a', '03', 'AA24'),
+('AA30_03', 'a', '03', 'AA30'),
+('AA30_05', 'b', '05', 'AA30'),
+('AA33_04', 'a', '04', 'AA33'),
+('AA35_04', 'f', '04', 'AA35'),
+('AA36_03', 'a', '03', 'AA36'),
+('AA36_05', 'b', '05', 'AA36'),
+('AA37_03', 'a', '03', 'AA37'),
+('AA39_03', 'a', '03', 'AA39'),
+('AA40_04', 'a', '04', 'AA40'),
+('AA43_03', 'a', '03', 'AA43'),
+('AA43_05', 'b', '05', 'AA43'),
+('AA44_04', 'f', '04', 'AA44'),
+('AA46_03', 'a', '03', 'AA46'),
+('AA46_04', 'f', '04', 'AA46'),
+('AA50_05', 'b', '05', 'AA50'),
+('AA51_03', 'a', '03', 'AA51'),
+('AA52_04', 'f', '04', 'AA52'),
+('AA54_04', 'a', '04', 'AA54'),
+('AA55_04', 'f', '04', 'AA55'),
+('AA57_04', 'f', '04', 'AA57'),
+('AA58_05', 'b', '05', 'AA58'),
+('AA60_04', 'a', '04', 'AA60'),
+('AA60_05', 'b', '05', 'AA60'),
+('AA62_03', 'a', '03', 'AA62'),
+('AA64_04', 'a', '04', 'AA64'),
+('AA65_03', 'a', '03', 'AA65'),
+('AA67_05', 'b', '05', 'AA67'),
+('AA68_03', 'a', '03', 'AA68'),
+('AA68_05', 'b', '05', 'AA68'),
+('AA69_05', 'b', '05', 'AA69'),
+('AA70_03', 'a', '03', 'AA70'),
+('AA72_04', 'f', '04', 'AA72'),
+('AA73_03', 'a', '03', 'AA73'),
+('AA73_05', 'b', '05', 'AA73'),
+('AA75_04', 'a', '04', 'AA75'),
+('AA75_05', 'b', '05', 'AA75'),
+('AA77_03', 'a', '03', 'AA77'),
+('AA78_05', 'b', '05', 'AA78'),
+('AA79_05', 'b', '05', 'AA79'),
+('AA80_04', 'f', '04', 'AA80'),
+('AA84_03', 'a', '03', 'AA84'),
+('AA86_05', 'b', '05', 'AA86'),
+('AA88_05', 'b', '05', 'AA88'),
+('AA90_04', 'f', '04', 'AA90'),
+('AA90_05', 'b', '05', 'AA90'),
+('AA93_04', 'a', '04', 'AA93'),
+('AA94_03', 'a', '03', 'AA94'),
+('AA96_03', 'a', '03', 'AA96');
 
 --
 -- Indexes for dumped tables
@@ -256,7 +318,7 @@ ALTER TABLE `soal_materi`
 ALTER TABLE `soal_peserta`
   ADD PRIMARY KEY (`id_soalpeserta`),
   ADD KEY `soal_peserta_fk1` (`id_peserta`) USING BTREE,
-  ADD KEY `id_soal` (`id_soal`) USING BTREE;
+  ADD KEY `soal_peserta_fk2` (`id_soal`) USING BTREE;
 
 --
 -- Constraints for dumped tables
