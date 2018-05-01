@@ -2,6 +2,7 @@ import xmlrpc.client
 import getpass
 import os
 import time
+from prettytable import PrettyTable
 
 SERVER_IP = 'localhost'
 SERVER_PORT = '8000'
@@ -14,7 +15,7 @@ def menu_awal():
     os.system('clear')
     t = PrettyTable(["SELAMAT DATANG ADMIN DI KUIS ONLINE BAHASA INGGRIS"])
     t.align["SELAMAT DATANG ADMIN DI KUIS ONLINE BAHASA INGGRIS"] = 'l'
-    t.add_row(['1. Login'])
+    t.add_row(['1. Login Admin'])
     t.add_row(['0. Exit'])
     print(t)
 
@@ -108,3 +109,7 @@ while True:
                 time.sleep(0.5)
                 os.system('clear')
                 break
+    elif pilihan == 0:
+        print("Thank you")
+        time.sleep(0.5)
+        break
