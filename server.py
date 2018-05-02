@@ -4,18 +4,18 @@ import random
 import time
 
 
-# IP = 'localhost'
-IP = input("Masukan IP server : \n")  # localhost
+IP = '10.30.0.16'
+# IP = input("Masukan IP server : \n")  # localhost
 PORT = 8000
 PORT_UP = 8001
-# DB_SERVER = 'localhost'
-DB_SERVER = input("Masukan IP DB : \n")
-# DB_USER = 'root'
-DB_USER = input("Masukan User DB : \n")
-# DB_PASS = ''
-DB_PASS = input("Masukan Password DB : \n")
-# DB_NAME = 'sister'
-DB_NAME = input("Masukan Nama DB : \n")
+DB_SERVER = '10.30.0.16'
+# DB_SERVER = input("Masukan IP DB : \n")
+DB_USER = 'kamal'
+# DB_USER = input("Masukan User DB : \n")
+DB_PASS = 'kamal'
+# DB_PASS = input("Masukan Password DB : \n")
+DB_NAME = 'sister'
+# DB_NAME = input("Masukan Nama DB : \n")
 server = SimpleXMLRPCServer((IP, PORT), allow_none=True)
 print("Listening on port", PORT)
 db = pymysql.connect(DB_SERVER, DB_USER, DB_PASS, DB_NAME)
@@ -87,6 +87,9 @@ def upload_soal(data):
     cursor.execute(query)
     db.commit()
     return True
+
+# 10.20.0.156
+# 10.30.0.16
 
 
 def lihat_soal():

@@ -52,67 +52,72 @@ while True:
                 menu_user()
                 pilihan = eval(input('Masukan pilihan :'))
                 if pilihan == 1:
-                    os.system('clear')
-                    soal = []
-                    print('Rentang ujian')
-                    print(
-                        f'Pukul {server.get_start_time()} - {server.get_start_time()}')
-                    waktu_mulai = server.waktu_mulai()
-                    waktu_selesai = server.waktu_selesai()
-                    print("Waktu anda mulai kuis: ", time.ctime(waktu_mulai))
-                    time.sleep(1)
-                    print(
-                        f"Anda diberi waktu {int(server.get_durasi())/60} menit")
-                    time.sleep(1)
-                    print("Selesaikan kuis sebelum: ",
-                          time.ctime(waktu_selesai))
-                    time.sleep(1)
-                    print("Kuis dimulai dalam...")
-                    time.sleep(2)
-                    for i in range(3, 0, -1):
-                        print(i)
-                        time.sleep(1)
-                    soal = server.get_soal()
-                    jawab = []
-                    num = 1
-                    for i in soal:
+                    if server.lihat_nilai(usr_user) != 0:
+                        print('Anda sudah melakukan kuis')
+                    else:
+
                         os.system('clear')
-                        if (time.time() > waktu_selesai):
-                            print("waktu habis")
-                            time.sleep(3)
-                            break
-                        while True:
+                        soal = []
+                        print('Rentang ujian')
+                        print(
+                            f'Pukul {server.get_start_time()} - {server.get_start_time()}')
+                        waktu_mulai = server.waktu_mulai()
+                        waktu_selesai = server.waktu_selesai()
+                        print("Waktu anda mulai kuis: ",
+                              time.ctime(waktu_mulai))
+                        time.sleep(1)
+                        print(
+                            f"Anda diberi waktu {int(server.get_durasi())/60} menit")
+                        time.sleep(1)
+                        print("Selesaikan kuis sebelum: ",
+                              time.ctime(waktu_selesai))
+                        time.sleep(1)
+                        print("Kuis dimulai dalam...")
+                        time.sleep(2)
+                        for i in range(3, 0, -1):
+                            print(i)
+                            time.sleep(1)
+                        soal = server.get_soal()
+                        jawab = []
+                        num = 1
+                        for i in soal:
                             os.system('clear')
-                            t = PrettyTable([str(num)+". "+i[1]])
-                            t.align[str(num)+". "+i[1]] = 'l'
-                            t.add_row(["a. %s" % i[3]])
-                            t.add_row(["b. %s" % i[4]])
-                            t.add_row(["c. %s" % i[5]])
-                            t.add_row(["d. %s" % i[6]])
-                            print(t)
-                            jaw = input("masukkan jawaban(a/b/c/d) : ")
-                            if (jaw == 'a') or (jaw == 'b') or (jaw == 'c') or (jaw == 'd'):
+                            if (time.time() > waktu_selesai):
+                                print("waktu habis")
+                                time.sleep(3)
                                 break
-                            else:
-                                print("Tidak ada opsi %s" % jaw)
-                        jawab.append(jaw)
-                        num += 1
-                    nilai = 0
-                    print(jawab)
-                    for i in range(len(jawab)):
-                        if (soal[i][2] == jawab[i]):
-                            nilai += 5
-                    print("Mohon tunggu sebentar...")
-                    time.sleep(1)
-                    print("Nilai Anda adalah : ", nilai)
-                    server.upload_nilai(nilai, usr_user, usr_pass)
-                    time.sleep(2)
-                    print("Nilai Anda sudah diupload")
-                    for i in range((len(soal)-len(jawab))):
-                        jawab.append('f')
-                    server.upload_soal_peserta(soal, usr_user, jawab)
-                    print("Enter to lanjutkan")
-                    input()
+                            while True:
+                                os.system('clear')
+                                t = PrettyTable([str(num)+". "+i[1]])
+                                t.align[str(num)+". "+i[1]] = 'l'
+                                t.add_row(["a. %s" % i[3]])
+                                t.add_row(["b. %s" % i[4]])
+                                t.add_row(["c. %s" % i[5]])
+                                t.add_row(["d. %s" % i[6]])
+                                print(t)
+                                jaw = input("masukkan jawaban(a/b/c/d) : ")
+                                if (jaw == 'a') or (jaw == 'b') or (jaw == 'c') or (jaw == 'd'):
+                                    break
+                                else:
+                                    print("Tidak ada opsi %s" % jaw)
+                            jawab.append(jaw)
+                            num += 1
+                        nilai = 0
+                        print(jawab)
+                        for i in range(len(jawab)):
+                            if (soal[i][2] == jawab[i]):
+                                nilai += 5
+                        print("Mohon tunggu sebentar...")
+                        time.sleep(1)
+                        print("Nilai Anda adalah : ", nilai)
+                        server.upload_nilai(nilai, usr_user, usr_pass)
+                        time.sleep(2)
+                        print("Nilai Anda sudah diupload")
+                        for i in range((len(soal)-len(jawab))):
+                            jawab.append('f')
+                        server.upload_soal_peserta(soal, usr_user, jawab)
+                        print("Enter to lanjutkan")
+                        input()
 
                 elif pilihan == 2:
                     os.system('clear')
