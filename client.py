@@ -4,7 +4,9 @@ import os
 import time
 from prettytable import PrettyTable
 
-SERVER_IP = 'localhost'
+# SERVER_IP = 'localhost'
+
+SERVER_IP = input("Masukan IP server tujuan : \n")
 SERVER_PORT = '8000'
 server = xmlrpc.client.ServerProxy(
     'http://{ip}:{port}'.format(ip=SERVER_IP, port=SERVER_PORT)
@@ -52,6 +54,9 @@ while True:
                 if pilihan == 1:
                     os.system('clear')
                     soal = []
+                    print('Rentang ujian')
+                    print(
+                        f'Pukul {server.get_start_time()} - {server.get_start_time()}')
                     waktu_mulai = server.waktu_mulai()
                     waktu_selesai = server.waktu_selesai()
                     print("Waktu anda mulai kuis: ", time.ctime(waktu_mulai))
@@ -129,7 +134,7 @@ while True:
                     for i in soal_peserta:
                         soal.append([i[0], i[1], i[2]])
                     if not jawaban:
-                        print(server.get_np(usr_user),
+                        print(server.get_nama_peserta(usr_user),
                               ", anda belum mulai kuis")
                         time.sleep(2)
                     else:

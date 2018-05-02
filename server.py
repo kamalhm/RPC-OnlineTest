@@ -4,13 +4,18 @@ import random
 import time
 
 
-IP = 'localhost'
+# IP = 'localhost'
+IP = input("Masukan IP server : \n")  # localhost
 PORT = 8000
 PORT_UP = 8001
-DB_SERVER = 'localhost'
-DB_USER = 'root'
-DB_PASS = ''
-DB_NAME = 'sister'
+# DB_SERVER = 'localhost'
+DB_SERVER = input("Masukan IP DB : \n")
+# DB_USER = 'root'
+DB_USER = input("Masukan User DB : \n")
+# DB_PASS = ''
+DB_PASS = input("Masukan Password DB : \n")
+# DB_NAME = 'sister'
+DB_NAME = input("Masukan Nama DB : \n")
 server = SimpleXMLRPCServer((IP, PORT), allow_none=True)
 print("Listening on port", PORT)
 db = pymysql.connect(DB_SERVER, DB_USER, DB_PASS, DB_NAME)
@@ -178,7 +183,7 @@ def get_id_admin(admin):
     query = "select id_admin from admin where id_admin= %s " % admin
     cursor.execute(query)
     tampung = cursor.fetchone()
-    return tampung
+    return tampung[0]
 
 
 def daftar(id, password):

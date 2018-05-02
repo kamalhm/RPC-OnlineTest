@@ -4,8 +4,12 @@ import os
 import time
 from prettytable import PrettyTable
 
-SERVER_IP = 'localhost'
+
+# SERVER_IP = 'localhost'
+# SERVER_PORT = '8000'
+SERVER_IP = input("Masukan IP server tujuan : \n")
 SERVER_PORT = '8000'
+
 server = xmlrpc.client.ServerProxy(
     'http://{ip}:{port}'.format(ip=SERVER_IP, port=SERVER_PORT)
 )
@@ -22,7 +26,7 @@ def menu_awal():
 
 def menu_admin():
     os.system('clear')
-    temp = server.get_id_admin(usr_user)[0]
+    temp = server.get_id_admin(usr_user)
     t = PrettyTable(["SELAMAT DATANG : "+temp])
     t.align["SELAMAT DATANG : "+temp] = 'l'
     t.add_row(['1. Upload Soal'])
@@ -50,9 +54,10 @@ while True:
                 menu_admin()
                 pilihan = eval(input('Masukkan pilihan :'))
                 if pilihan == 1:
-                    nama_file = input('Masukan nama file (format .csv)')
-                    print('Uploading...')
-                    lines = [line.rstrip('\n') for line in open(nama_file)]
+                    nama_file = input('Masukkan nama file (format .csv)')
+                    print('uploading...')
+                    lines = [line.rstrip('\n')
+                             for line in open(f'{nama_file}.csv')]
                     for i in range(len(lines)):
                         server.upload_soal(lines[i])
                     print("Enter to lanjutkan")
