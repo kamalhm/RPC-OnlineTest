@@ -11,11 +11,11 @@ Distributed system version of an online test using Remote Procedure Call (RPC) i
 ## Functionality
 
 Admin :
-1. Question upload (done)
-2. See uploaded questions (done)
-3. Delete questions on the database (done)
+1. Question upload
+2. See uploaded questions
+3. Delete questions on the database
 
 User :
-1. Start quiz (tbd)
-2. See results (tbd)
-
+1. Start quiz
+2. See results
+3. Register a new account
