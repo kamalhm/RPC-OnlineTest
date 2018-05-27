@@ -16,7 +16,7 @@ server = xmlrpc.client.ServerProxy(
 
 
 def menu_awal():
-    os.system('clear')
+    os.system('cls')
     t = PrettyTable(["SELAMAT DATANG ADMIN DI KUIS ONLINE BAHASA INGGRIS"])
     t.align["SELAMAT DATANG ADMIN DI KUIS ONLINE BAHASA INGGRIS"] = 'l'
     t.add_row(['1. Login Admin'])
@@ -25,7 +25,7 @@ def menu_awal():
 
 
 def menu_admin():
-    os.system('clear')
+    os.system('cls')
     temp = server.get_id_admin(usr_user)
     t = PrettyTable(["SELAMAT DATANG : "+temp])
     t.align["SELAMAT DATANG : "+temp] = 'l'
@@ -40,12 +40,12 @@ def menu_admin():
 
 while True:
     valid_admin = False
-    os.system('clear')
+    os.system('cls')
     menu_awal()
     pilihan = eval(input('Masukan pilihan :'))
     if pilihan == 1:
         while True:
-            os.system('clear')
+            os.system('cls')
             if valid_admin == False:
                 usr_user = input('Username :')
                 usr_pass = getpass.getpass('Password :')
@@ -77,7 +77,7 @@ while True:
                     input()
 
                 elif pilihan == 4:
-                    os.system('clear')
+                    os.system('cls')
                     waktu_mulai = input("Masukan jam mulai kuis : \n")
                     waktu_selesai = input("Masukan jam selesai kuis : \n")
                     if server.set_start_time(waktu_mulai) and server.set_end_time(waktu_selesai):
@@ -86,7 +86,7 @@ while True:
                         print(f'Pukul {waktu_mulai} - {waktu_selesai}')
                         time.sleep(2)
                 elif pilihan == 5:
-                    os.system('clear')
+                    os.system('cls')
                     durasi = input(
                         "Masukan durasi kuis (satuan menit) : \n")
                     server.set_durasi(durasi)
@@ -100,10 +100,10 @@ while True:
                     time.sleep(0.5)
                     break
             else:
-                os.system('clear')
+                os.system('cls')
                 print('Salah password/username')
                 time.sleep(0.5)
-                os.system('clear')
+                os.system('cls')
                 break
     elif pilihan == 0:
         print("Thank you")

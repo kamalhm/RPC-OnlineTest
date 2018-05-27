@@ -14,7 +14,7 @@ server = xmlrpc.client.ServerProxy(
 
 
 def menu_awal():
-    os.system('clear')
+    os.system('cls')
     t = PrettyTable(["SELAMAT DATANG DI KUIS ONLINE BAHASA INGGRIS"])
     t.align["SELAMAT DATANG DI KUIS ONLINE BAHASA INGGRIS"] = 'l'
     t.add_row(['1. Login User'])
@@ -24,7 +24,7 @@ def menu_awal():
 
 
 def menu_user():
-    os.system('clear')
+    os.system('cls')
     temp = server.get_nama_peserta(usr_user)
     t = PrettyTable(["SELAMAT DATANG : "+temp])
     t.align["SELAMAT DATANG : "+temp] = 'l'
@@ -38,12 +38,12 @@ def menu_user():
 while True:
     valid_admin = False
     valid_user = False
-    os.system('clear')
+    os.system('cls')
     menu_awal()
     pilihan = eval(input('Masukan pilihan :'))
     if pilihan == 1:
         while True:
-            os.system('clear')
+            os.system('cls')
             if valid_user == False:
                 usr_user = input('Username :')
                 usr_pass = getpass.getpass('Password :')
@@ -54,9 +54,12 @@ while True:
                 if pilihan == 1:
                     if server.lihat_nilai(usr_user) != 0:
                         print('Anda sudah melakukan kuis')
+                        print(f'Nilai anda adalah {server.lihat_nilai(usr_user)}')
+                        time.sleep(3)
+                        
                     else:
 
-                        os.system('clear')
+                        os.system('cls')
                         soal = []
                         print('Rentang ujian')
                         print(
@@ -81,13 +84,13 @@ while True:
                         jawab = []
                         num = 1
                         for i in soal:
-                            os.system('clear')
+                            os.system('cls')
                             if (time.time() > waktu_selesai):
                                 print("waktu habis")
                                 time.sleep(3)
                                 break
                             while True:
-                                os.system('clear')
+                                os.system('cls')
                                 t = PrettyTable([str(num)+". "+i[1]])
                                 t.align[str(num)+". "+i[1]] = 'l'
                                 t.add_row(["a. %s" % i[3]])
@@ -120,7 +123,7 @@ while True:
                         input()
 
                 elif pilihan == 2:
-                    os.system('clear')
+                    os.system('cls')
                     nilai = server.lihat_nilai(usr_user)
                     if not nilai:
                         temp = server.get_nama_peserta(usr_user)
@@ -132,7 +135,7 @@ while True:
                         print("Enter to lanjutkan")
                         input()
                 elif pilihan == 3:
-                    os.system('clear')
+                    os.system('cls')
                     jawaban = server.lihat_jawaban(usr_user)
                     soal_peserta = server.lihat_soal()
                     soal = []
@@ -166,10 +169,10 @@ while True:
                     valid_user == False
                     print("Log Out Successful")
                     time.sleep(0.5)
-                    os.system('clear')
+                    os.system('cls')
                     break
     elif pilihan == 2:
-        os.system("clear")
+        os.system("cls")
         t = PrettyTable(["Registrasi"])
         id = input("Masukkan id = ")
         password = getpass.getpass('Password :')
